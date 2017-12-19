@@ -10330,13 +10330,15 @@
 	    var id = $(this).closest('tr').attr('id');
 	    var attribute = $(this).attr('class').replace('food-', '');
 	    var value = $(this).text();
-	    updateFood(id, attribute, value);
+	    var cal = this.nextElementSibling.innerText;
+	    updateFood(id, attribute, cal, value);
 	  });
 	});
 
-	var updateFood = function updateFood(id, attr, value) {
+	var updateFood = function updateFood(id, attr, cal, value) {
 	  var updatedFood = { food: {} };
 	  updatedFood['food'][attr] = value;
+	  updatedFood['food']['calories'] = cal;
 	  $.ajax({
 	    type: 'PATCH',
 	    url: api + '/foods/' + id,
@@ -10677,9 +10679,6 @@
 
 	var retrieveFoods = function retrieveFoods() {
 	  $.get(api + '/foods').then(function (foods) {
-	    // foods = foods.sort((a, b) => {
-	    //   return a.id - b.id
-	    // })
 	    foods.forEach(function (food) {
 	      handlers.prependFood(food);
 	    });
