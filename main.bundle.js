@@ -10330,15 +10330,13 @@
 	    var id = $(this).closest('tr').attr('id');
 	    var attribute = $(this).attr('class').replace('food-', '');
 	    var value = $(this).text();
-	    var cal = this.nextElementSibling.innerText;
-	    updateFood(id, attribute, cal, value);
+	    updateFood(id, attribute, value);
 	  });
 	});
 
-	var updateFood = function updateFood(id, attr, cal, value) {
+	var updateFood = function updateFood(id, attr, value) {
 	  var updatedFood = { food: {} };
 	  updatedFood['food'][attr] = value;
-	  updatedFood['food']['calories'] = cal;
 	  $.ajax({
 	    type: 'PATCH',
 	    url: api + '/foods/' + id,
